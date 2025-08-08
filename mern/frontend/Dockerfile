@@ -1,23 +1,17 @@
-# Use the official image as a parent image
-# Description: Dockerfile for the client side of the MERN stack application
-
-# Use the official image as a parent image
-FROM node:18.9.1
-
-# Set the working directory
+# Stage 1: Build the React application
+FROM node:18-alpine AS builder
 WORKDIR /app
-
-# Copy the file from your host to your current location
 COPY package.json .
-
-# Run the command inside your image filesystem
 RUN npm install
-
-# Inform Docker that the container is listening on the specified port at runtime
-EXPOSE 5173
-
-# Copy the rest of your app's source code from your host to your image filesystem
 COPY . .
+# This creates a 'dist' or 'build' folder with your static files
+RUN npm run build
 
-# Run the specified command within the container
-CMD ["npm", "run", "dev"]
+# Stage 2: Serve the application using Nginx
+FROM nginx:stable-alpine
+# Copy the static files from the 'builder' stage
+COPY --from=builder /app/dist /usr/share/nginx/html
+# If your app is a Single Page Application (SPA), you might need a custom nginx.conf
+# to handle routing. For now, this is a great start.
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
