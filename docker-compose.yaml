@@ -1,19 +1,19 @@
 services:
   backend:
-    build: ./mern/backend
+    image: dockerusernmae/mern-backedn:latest # This will be tagged dynamically in CodeBuild
     ports:
       - "5050:5050" 
     networks:
       - mern_network
     environment:
-      MONGO_URI: mongodb://mongo:27017/mydatabase  
+      MONGO_URI: mongodb://mongodb:27017/mydatabase  
     depends_on:
       - mongodb
 
   frontend:
-    build: ./mern/frontend
+    image: dockerusername/mern-frontend:latest # This will be tagged dynamically in CodeBuild
     ports:
-      - "5173:5173"  
+      - "80:80"        # nginx run on port 80
     networks:
       - mern_network
     environment:
