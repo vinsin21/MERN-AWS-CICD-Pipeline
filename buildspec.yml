@@ -1,0 +1,43 @@
+version: 0.2
+
+env:
+  parameter-store:
+    DOCKER_USERNAME: /myapp/docker-credentials/username
+    DOCKER_PASSWORD: /myapp/docker-credentials/password
+
+phases:
+  pre_build:
+    commands:
+      - echo "Starting Pre-Build Stage"
+      - echo "Login to docker"
+      - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+      - REPO_URI_SERVER="$DOCKER_USERNAME/mern-server"
+      - REPO_URI_CLIENT="$DOCKER_USERNAME/mern-client"
+      - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+      - IMAGE_TAG=${COMMIT_HASH:=latest}
+  build:
+    commands:
+      - echo "Starting Build Stage"
+      - echo "Building docker images"
+      - cd mern/backend
+      - echo "Building backend docker image"
+      - docker build -t "$REPO_URI_SERVER:$IMAGE_TAG" .
+      - cd ../frontend
+      - echo "Building frontend docker image"
+      - docker build -t "$REPO_URI_CLIENT:$IMAGE_TAG" .
+      - cd ../../
+  post_build:
+    commands:
+      - echo "Post build start"
+      - echo "push images to dockerhub"
+      - docker push "$REPO_URI_SERVER:$IMAGE_TAG"
+      - docker push "$REPO_URI_CLIENT:$IMAGE_TAG"
+      - echo "updating image name in docker compose"
+      - sed -i "s|dockerusername/mern-backend:latest|$REPO_URI_SERVER:$IMAGE_TAG|g" docker-compose.yml
+      - sed -i "s|dockerusername/mern-frontend:latest|$REPO_URI_CLIENT:$IMAGE_TAG|g" docker-compose.yml
+
+artifacts:
+  files:
+    - appspec.yml
+    - docker-compose.yml
+    - scripts/**/*
