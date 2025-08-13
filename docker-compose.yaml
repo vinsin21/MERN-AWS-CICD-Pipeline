@@ -1,6 +1,6 @@
 services:
   backend:
-    image: dockerusername/mern-backedn:latest # This will be tagged dynamically in CodeBuild
+    image: dockerusername/mern-backend:latest # This will be tagged dynamically in CodeBuild
     ports:
       - "5050:5050" 
     networks:
