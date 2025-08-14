@@ -35,7 +35,8 @@ phases:
       - echo "updating image name in docker compose"
       - sed -i "s|dockerusername/mern-backend:latest|$REPO_URI_SERVER:$IMAGE_TAG|g" docker-compose.yml
       - sed -i "s|dockerusername/mern-frontend:latest|$REPO_URI_CLIENT:$IMAGE_TAG|g" docker-compose.yml
-
+      - echo "Displaying updated docker-compose.yml content:"
+      - cat docker-compose.yml
 artifacts:
   files:
     - appspec.yml
