@@ -4,6 +4,8 @@ This project demonstrates a complete, automated CI/CD pipeline for a containeriz
 
 When a developer pushes new code to the GitHub repository, the pipeline automatically builds, tests (optional stage), and deploys the updated application to an **Amazon EC2** instance with zero downtime.
 
+![Image](https://github.com/user-attachments/assets/2851741f-ea10-4545-80ff-d1ef51e33193)
+
 ---
 
 ## Architecture Diagram
@@ -23,6 +25,8 @@ The pipeline follows a logical, event-driven workflow. This visual represents th
 
 ## Technologies Used
 
+![Image](https://github.com/user-attachments/assets/fe78fbbe-10ad-45d8-80f9-1209e6e9897f)
+
 * **Application:** MERN Stack (MongoDB, Express.js, React, Node.js)
 * **Containerization:** Docker, Docker Compose
 * **Cloud Provider:** Amazon Web Services (AWS)
@@ -35,6 +39,7 @@ The pipeline follows a logical, event-driven workflow. This visual represents th
 * **Hosting:** Amazon EC2
 
 ---
+
 
 ## Project Structure
 
@@ -57,6 +62,7 @@ The pipeline follows a logical, event-driven workflow. This visual represents th
 └── stop\_container.sh   \# Failsafe script to stop containers.
 
 ```
+![Image](https://github.com/user-attachments/assets/865cc1bc-8b72-48c9-958d-5af454160518)
 
 ---
 
