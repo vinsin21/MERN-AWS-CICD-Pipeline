@@ -2,6 +2,8 @@
 
 This project demonstrates a complete, automated CI/CD pipeline for a containerized MERN (MongoDB, Express.js, React, Node.js) stack application. The primary goal is to showcase a practical implementation of modern DevOps practices using **AWS services** and **Docker**.
 
+![Image](https://github.com/user-attachments/assets/093a5876-e53e-48c3-96b4-5497c9eff3b2)
+
 When a developer pushes new code to the GitHub repository, the pipeline automatically builds, tests (optional stage), and deploys the updated application to an **Amazon EC2** instance with zero downtime.
 
 ![Image](https://github.com/user-attachments/assets/2851741f-ea10-4545-80ff-d1ef51e33193)
